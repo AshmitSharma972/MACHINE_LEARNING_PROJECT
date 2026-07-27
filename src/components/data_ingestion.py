@@ -10,7 +10,8 @@ from src.logger import logging
 from src.components.data_transfomation import DataTransformer
 # If you renamed the file, use:
 # from src.components.data_transformation import DataTransformer
-
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
@@ -90,7 +91,12 @@ if __name__ == "__main__":
         )
     )
 
-    print("Data Transformation Completed Successfully")
-    print("Train Array Shape :", train_arr.shape)
-    print("Test Array Shape  :", test_arr.shape)
-    print("Preprocessor Path :", preprocessor_path)
+    model_trainer = ModelTrainer()
+
+    best_model_score = model_trainer.initiate_model_trainer(
+        train_arr,
+        test_arr,
+        preprocessor_path
+    )
+
+    
