@@ -3,4 +3,9 @@ pandas
 matplotlib.pyplot
 seaborn
 sys
+sl
+sklearn
+catboost
+xgboost
+dill
 -e .
