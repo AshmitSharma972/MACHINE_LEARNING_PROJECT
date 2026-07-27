@@ -17,7 +17,7 @@ from src.utils import save_object
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path: str = os.path.join(
-        "artifacts",
+        "artifact",
         "preprocessor.pkl"
     )
 
@@ -34,16 +34,16 @@ class DataTransformer:
         try:
 
             numerical_columns = [
-                "writing_score",
-                "reading_score"
+                "writing score",
+                "reading score"
             ]
 
             categorical_columns = [
                 "gender",
-                "race_ethnicity",
-                "parental_level_of_education",
+                "race/ethnicity",
+                "parental level of education",
                 "lunch",
-                "test_preparation_course"
+                "test preparation course"
             ]
 
             num_pipeline = Pipeline(
@@ -83,19 +83,21 @@ class DataTransformer:
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
 
+            print("Train Columns:")
+            print(train_df.columns.tolist())
+
             logging.info("Read train and test data completed.")
 
             preprocessor_obj = self.get_data_transformer_obj()
 
-            target_column_name = "math_score"   # or "math score" according to your dataset
-
-            input_feature_train = train_df.drop(columns=[target_column_name], axis=1)
+            target_column_name = "math score"  
+            input_feature_train = train_df.drop(columns=[target_column_name])
             target_feature_train = train_df[target_column_name]
 
-            input_feature_test = test_df.drop(columns=[target_column_name], axis=1)
+            input_feature_test = test_df.drop(columns=[target_column_name])
             target_feature_test = test_df[target_column_name]
 
-            logging.info("Applying preprocessing on training and testing datasets.",i)
+            logging.info("Applying preprocessing on training and testing datasets.")
 
             input_train_arr = preprocessor_obj.fit_transform(input_feature_train)
             input_test_arr = preprocessor_obj.transform(input_feature_test)
